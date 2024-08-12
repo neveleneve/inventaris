@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InventarisController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,12 @@ Auth::routes([
     'register' => false
 ]);
 
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
-Route::resource('item', ItemController::class);
-Route::resource('transaksi', TransaksiController::class);
+Route::get('dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+Route::resource('aset', ItemController::class)->only([
+    'index',
+    'show',
+    'edit',
+    'update',
+]);
+Route::resource('inventaris', InventarisController::class);
+Route::get('report', [App\Http\Controllers\ReportController::class, 'index'])->name('report.index');

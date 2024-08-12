@@ -11,7 +11,15 @@ class Item extends Model {
     protected $fillable = [
         'name',
         'jenis_id',
+        'inventaris_id',
         'id_item',
-        'qty',
     ];
+
+    public function inventaris() {
+        return $this->belongsTo(Inventaris::class);
+    }
+
+    public function jenis() {
+        return $this->belongsTo(JenisAset::class);
+    }
 }

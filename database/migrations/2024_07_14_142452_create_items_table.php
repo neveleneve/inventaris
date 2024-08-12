@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->string('id_item');
             $table->string('name');
             $table->integer('jenis_id');
-            $table->integer('qty')->nullable()->default(0);
+            $table->integer('inventaris_id');
             $table->timestamps();
         });
     }

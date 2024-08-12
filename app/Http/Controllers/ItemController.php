@@ -8,26 +8,20 @@ use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ItemController extends Controller {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index() {
-        $item = Item::get();
-        return view('pages.item.index', [
-            'items' => $item
-        ]);
+    public function __construct() {
+        $this->middleware('permission:aset index')->only('index');
+        $this->middleware('permission:aset show')->only('show');
+        $this->middleware('permission:aset edit')->only('edit', 'update');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function index() {
+        return view('pages.item.index');
+    }
+
     public function create() {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request) {
         $validasi = Validator::make($request->all(), [
             'name' => ['required', 'string'],
@@ -54,30 +48,18 @@ class ItemController extends Controller {
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Item $item) {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Item $item) {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Item $item) {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Item $item) {
         //
     }
