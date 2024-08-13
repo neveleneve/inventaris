@@ -27,7 +27,7 @@ class InventarisSeeder extends Seeder {
                 for ($j = 0; $j < rand(5, 8); $j++) {
                     Item::create([
                         'name' => $item['name'],
-                        'jenis_id' => $item['jenis_id'],
+                        'jenis_aset_id' => $item['jenis_id'],
                         'inventaris_id' => $inventaris->id,
                         'id_item' => $this->randomString(20),
                     ]);

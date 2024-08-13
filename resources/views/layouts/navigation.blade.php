@@ -33,10 +33,10 @@
                         <span class="text-dark fw-bold fs-4">{{ Auth::user()->name }}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="{{ route('logout') }}"
+                        <a class="dropdown-item fw-bold" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
-                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <i class="bi bi-box-arrow-right"></i>
                             {{ __('Logout') }}
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

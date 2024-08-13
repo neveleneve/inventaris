@@ -26,7 +26,6 @@
                     <a href="#submenu1" data-bs-toggle="collapse" class="sidebar-link collapsed">
                         <i class="bi bi-journal align-middle"></i>
                         <span class="align-middle">Inventarisasi</span>
-                        <i class="bi bi-chevron-down chevron align-middle"></i>
                     </a>
                     <ul class="sidebar-dropdown list-unstyled collapse {{ Request::is('inventaris') || Request::is('inventaris/create') ? 'show' : null }}"
                         id="submenu1" data-bs-parent="#sidebar">

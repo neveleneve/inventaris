@@ -8,6 +8,11 @@
                 <option value="keluar">Keluar / Pengurangan</option>
             </select>
         </div>
+        <div class="col-12 mb-3">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
         @if ($jenisInv == 'masuk')
             <div class="col-12 mb-3">
                 <label for="tahun" class="fw-bold">Tahun Pengadaan Inventaris</label>
