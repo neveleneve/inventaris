@@ -15,7 +15,7 @@ class InventarisKeluar extends Model {
     ];
 
     public function aset() {
-        return $this->belongsTo(Item::class);
+        return $this->belongsTo(Item::class, 'item_id', 'id');
     }
 
     public function inventaris() {

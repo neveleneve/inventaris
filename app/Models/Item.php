@@ -24,6 +24,6 @@ class Item extends Model {
     }
 
     public function jenis() {
-        return $this->belongsTo(JenisAset::class);
+        return $this->belongsTo(JenisAset::class, 'jenis_aset_id', 'id');
     }
 }

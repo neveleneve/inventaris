@@ -74,5 +74,7 @@ class AsetIndex extends Component {
             // 'jenis' => '',
             'jenis' => $item->jenis->name,
         ];
+
+        $this->dispatch('open-modal');
     }
 }

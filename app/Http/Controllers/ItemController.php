@@ -11,7 +11,6 @@ class ItemController extends Controller {
     public function __construct() {
         $this->middleware('permission:aset index')->only('index');
         $this->middleware('permission:aset show')->only('show');
-        $this->middleware('permission:aset edit')->only('edit', 'update');
     }
 
     public function index() {

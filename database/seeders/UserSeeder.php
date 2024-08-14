@@ -14,13 +14,13 @@ class UserSeeder extends Seeder {
     public function run(): void {
         $users = [
             [
-                'name' => 'Andi',
-                'email' => 'andi@gmail.com',
+                'name' => 'Ketua',
+                'email' => 'aurel@gmail.com',
                 'password' => Hash::make('12345678'),
             ],
             [
-                'name' => 'Budi',
-                'email' => 'budi@gmail.com',
+                'name' => 'Administrator',
+                'email' => 'administrator@gmail.com',
                 'password' => Hash::make('12345678'),
             ],
         ];

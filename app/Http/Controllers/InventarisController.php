@@ -12,6 +12,8 @@ class InventarisController extends Controller {
         $this->middleware('permission:inventaris create')->only('create', 'store');
     }
     public function index() {
+        // $data = Inventaris::get();
+        // dd($data);
         return view('pages.inventaris.index');
     }
 

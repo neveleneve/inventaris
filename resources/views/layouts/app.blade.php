@@ -9,8 +9,8 @@
     {{-- <link rel="stylesheet" href="{{ asset('assets/adminkit/static/css/app.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('assets/adminkit/static/css/app-pro.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/bootstrap-icons/font/bootstrap-icons.css') }}">
-    @stack('customcss')
     @livewireStyles
+    @stack('customcss')
 </head>
 
 <body>
@@ -30,8 +30,8 @@
     </div>
     {{-- <script src="{{ asset('assets/adminkit/static/js/app.js') }}"></script> --}}
     <script src="{{ asset('assets/adminkit/static/js/app-pro.js') }}"></script>
-    @stack('customjs')
     @livewireScripts
+    @stack('customjs')
 </body>
 
 </html>

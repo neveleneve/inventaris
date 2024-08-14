@@ -4,7 +4,7 @@
             id="search">
     </div>
     @include('layouts.dataperpage')
-    <div class="col-lg-12 justify-content-center" wire:loading wire:loading.class='d-flex' wire:loading.target='search'>
+    <div class="col-lg-12 justify-content-center" wire:loading wire:loading.class='d-flex'>
         <div class="spinner-border" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
@@ -32,17 +32,10 @@
                                 <td>
                                     <div class="btn-group" role="group">
                                         @can('aset show')
-                                            <a href="{{ route('aset.show', ['aset' => $item->id]) }}"
-                                                class="btn btn-sm btn-primary fw-bold" data-bs-toggle="modal"
-                                                data-bs-target="#modalLihat" wire:click='getDataAset({{ $item->id }})'>
+                                            <button class="btn btn-sm btn-primary fw-bold"
+                                                wire:click='getDataAset({{ $item->id }})'>
                                                 Lihat
-                                            </a>
-                                        @endcan
-                                        @can('aset edit')
-                                            <a href="{{ route('aset.edit', ['aset' => $item->id]) }}"
-                                                class="btn btn-sm btn-warning fw-bold">
-                                                Ubah
-                                            </a>
+                                            </button>
                                         @endcan
                                     </div>
                                 </td>
@@ -71,19 +64,29 @@
                 </div>
                 <div class="modal-body">
                     <label for="kode" class="fw-bold">Kode Aset</label>
-                    <input type="text" id="kode" class="form-control mb-3" wire:model='dataAset.kode'>
+                    <input type="text" id="kode" class="form-control mb-3" wire:model='dataAset.kode' readonly>
                     <label for="nama" class="fw-bold">Nama Aset</label>
-                    <input type="text" id="nama" class="form-control mb-3" wire:model='dataAset.nama'>
+                    <input type="text" id="nama" class="form-control mb-3" wire:model='dataAset.nama' readonly>
                     <label for="jenis" class="fw-bold">Jenis Aset</label>
-                    <input type="text" id="jenis" class="form-control mb-3" wire:model='dataAset.jenis'>
+                    <input type="text" id="jenis" class="form-control mb-3" wire:model='dataAset.jenis' readonly>
                     <label for="nama" class="fw-bold">Tahun Anggaran</label>
-                    <input type="text" id="tahun" class="form-control mb-3" wire:model='dataAset.tahun'>
+                    <input type="text" id="tahun" class="form-control" wire:model='dataAset.tahun' readonly>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-danger rounded-5 fw-bold" data-bs-dismiss="modal">
+                        Close
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@push('customjs')
+    <script>
+        Livewire.on('open-modal', event => {
+            const modal = new bootstrap.Modal(document.getElementById('modalLihat'));
+            modal.show();
+        });
+    </script>
+@endpush
