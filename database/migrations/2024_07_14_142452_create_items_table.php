@@ -15,7 +15,6 @@ return new class extends Migration {
             $table->string('name');
             $table->integer('jenis_aset_id');
             $table->integer('inventaris_id');
-            $table->softDeletes();
             $table->timestamps();
         });
     }

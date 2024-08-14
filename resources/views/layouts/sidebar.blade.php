@@ -23,22 +23,27 @@
             @endcan
             @canany(['inventaris index', 'inventaris create'])
                 <li class="sidebar-item">
-                    <a href="#submenu1" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                    <a href="#submenu1" data-bs-toggle="collapse"
+                        class="sidebar-link {{ Request::is('inventaris') || Request::is('inventaris/create') ? null : 'collapsed' }}">
                         <i class="bi bi-journal align-middle"></i>
                         <span class="align-middle">Inventarisasi</span>
                     </a>
-                    <ul class="sidebar-dropdown list-unstyled collapse {{ Request::is('inventaris') || Request::is('inventaris/create') ? 'show' : null }}"
+                    <ul class="list-unstyled collapse {{ Request::is('inventaris') || Request::is('inventaris/create') ? 'show' : null }}"
                         id="submenu1" data-bs-parent="#sidebar">
                         @can('inventaris index')
                             <li class="sidebar-item {{ Request::is('inventaris') ? 'active' : null }}">
-                                <a class="sidebar-link " href="{{ route('inventaris.index') }}">
+                                <a class="sidebar-link {{ Request::is('inventaris') ? 'fw-bold' : null }}"
+                                    href="{{ route('inventaris.index') }}">
+                                    <i class="bi bi-chevron-right"></i>
                                     Data Inventarisasi
                                 </a>
                             </li>
                         @endcan
                         @can('inventaris create')
                             <li class="sidebar-item {{ Request::is('inventaris/create') ? 'active' : null }}">
-                                <a class="sidebar-link" href="{{ route('inventaris.create') }}">
+                                <a class="sidebar-link {{ Request::is('inventaris/create') ? 'fw-bold' : null }}"
+                                    href="{{ route('inventaris.create') }}">
+                                    <i class="bi bi-chevron-right"></i>
                                     Aset Masuk/Keluar
                                 </a>
                             </li>

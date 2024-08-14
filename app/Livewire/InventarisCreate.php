@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\JenisAset;
 use Livewire\Component;
 
 class InventarisCreate extends Component {
@@ -9,17 +10,20 @@ class InventarisCreate extends Component {
 
     public $dataAset = null;
     public $jmlAset = 0;
+    // public $jenisAset;
+
 
     public function render() {
-        if ($this->jenisInv) {
-            # code...
-        }
-        return view('livewire.inventaris-create');
+        $jenisAset = JenisAset::get();
+        return view('livewire.inventaris-create', [
+            'jenisAset' => $jenisAset
+        ]);
     }
 
     public function addAset() {
         $this->dataAset[$this->jmlAset] = [
             'nama' => '',
+            'jenis' => '',
             'total' => 0,
         ];
         $this->jmlAset = count($this->dataAset);

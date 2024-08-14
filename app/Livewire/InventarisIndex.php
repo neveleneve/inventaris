@@ -16,12 +16,12 @@ class InventarisIndex extends Component {
 
     public function render() {
         if ($this->search == '') {
-            $data = Inventaris::with('aset')
-                ->withCount('aset')
+            $data = Inventaris::with('aset', 'inventaris_keluar')
+                ->withCount('aset', 'inventaris_keluar')
                 ->paginate($this->dataPerPage);
         } else {
-            $data = Inventaris::with('aset')
-                ->withCount('aset')
+            $data = Inventaris::with('aset', 'inventaris_keluar')
+                ->withCount('aset', 'inventaris_keluar')
                 ->where('kode_inventarisasi', 'LIKE', '%' . $this->search . '%')
                 ->orWhere('tahun_pengadaan', 'LIKE', '%' . $this->search . '%')
                 ->paginate($this->dataPerPage);

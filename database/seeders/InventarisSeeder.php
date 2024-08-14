@@ -3,14 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\Inventaris;
+use App\Models\InventarisKeluar;
 use App\Models\Item;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class InventarisSeeder extends Seeder {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void {
         $item = [
             'name' => 'HP Victus 17" RAM 16GB SSD 1TB',
@@ -18,21 +16,37 @@ class InventarisSeeder extends Seeder {
         ];
         $pengadaan = 2;
         for ($i = 0; $i < $pengadaan; $i++) {
-            $inventaris = Inventaris::create([
+            $inventarisMasuk = Inventaris::create([
                 'kode_inventarisasi' => $this->randomString(12),
                 'tahun_pengadaan' => 2022 + $i,
-                'jenis_inventaris' => 'masuk',
+                'jenis_inventarisasi' => 'masuk',
+                'verified_at' => date('Y-m-d H:i:s'),
             ]);
-            if ($inventaris) {
+            if ($inventarisMasuk) {
                 for ($j = 0; $j < rand(5, 8); $j++) {
                     Item::create([
                         'name' => $item['name'],
                         'jenis_aset_id' => $item['jenis_id'],
-                        'inventaris_id' => $inventaris->id,
+                        'inventaris_id' => $inventarisMasuk->id,
                         'id_item' => $this->randomString(20),
                     ]);
                 }
             }
+        }
+
+        $jmlItem = Item::count();
+        $inventarisKeluar = Inventaris::create([
+            'kode_inventarisasi' => $this->randomString(12),
+            'tahun_pengadaan' => 2024,
+            'jenis_inventarisasi' => 'keluar',
+            // 'verified_at' => date('Y-m-d H:i:s'),
+        ]);
+        if ($inventarisKeluar) {
+            InventarisKeluar::create([
+                'item_id' => rand(1, $jmlItem),
+                'inventaris_id' => $inventarisKeluar->id,
+                'keterangan' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio dolores doloribus voluptates? Facilis repudiandae odio magni veniam magnam culpa earum iste ut, consequuntur obcaecati quibusdam exercitationem cupiditate consequatur nihil corporis.',
+            ]);
         }
     }
 

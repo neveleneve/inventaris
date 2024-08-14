@@ -28,7 +28,8 @@
             </main>
         </div>
     </div>
-    <script src="{{ asset('assets/adminkit/static/js/app.js') }}"></script>
+    {{-- <script src="{{ asset('assets/adminkit/static/js/app.js') }}"></script> --}}
+    <script src="{{ asset('assets/adminkit/static/js/app-pro.js') }}"></script>
     @stack('customjs')
     @livewireScripts
 </body>

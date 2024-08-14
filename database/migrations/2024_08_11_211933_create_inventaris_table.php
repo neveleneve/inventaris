@@ -13,7 +13,8 @@ return new class extends Migration {
             $table->id();
             $table->string('kode_inventarisasi');
             $table->integer('tahun_pengadaan');
-            $table->enum('jenis_inventaris', ['masuk', 'keluar']);
+            $table->enum('jenis_inventarisasi', ['masuk', 'keluar']);
+            $table->dateTime('verified_at')->default(null)->nullable();
             $table->timestamps();
         });
     }
