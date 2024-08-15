@@ -102,17 +102,21 @@
                             <thead class="table-dark">
                                 <tr>
                                     <th>Kode Aset</th>
+                                    @if ($dataInventaris['jenis'] == 'Masuk')
+                                        <th>Jenis Aset</th>
+                                    @endif
                                     <th>Nama</th>
-                                    @if ($dataInventaris['jenis'] == 'keluar')
+                                    @if ($dataInventaris['jenis'] == 'Keluar')
                                         <th>Keterangan</th>
                                     @endif
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($dataInventaris['jenis'] == 'masuk')
+                                @if ($dataInventaris['jenis'] == 'Masuk')
                                     @forelse ($dataInventaris['aset'] as $item)
                                         <tr>
                                             <td>{{ $item->id_item }}</td>
+                                            <td>{{ $item->jenis->name }}</td>
                                             <td>{{ $item->name }}</td>
                                         </tr>
                                     @empty
@@ -122,7 +126,7 @@
                                             </td>
                                         </tr>
                                     @endforelse
-                                @elseif ($dataInventaris['jenis'] == 'keluar')
+                                @elseif ($dataInventaris['jenis'] == 'Keluar')
                                     @forelse ($dataInventaris['aset'] as $itemm)
                                         <tr>
                                             <td>{{ $itemm->aset->id_item }}</td>

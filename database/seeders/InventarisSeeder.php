@@ -50,7 +50,7 @@ class InventarisSeeder extends Seeder {
     }
 
     function randomString($length = 10) {
-        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkalmnopqrstuvwxyz';
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         // $cap = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         // $low = 'abcdefghijkalmnopqrstuvwxyz';
         // $num = '0123456789';

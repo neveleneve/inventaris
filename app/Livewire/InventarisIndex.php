@@ -36,7 +36,6 @@ class InventarisIndex extends Component {
                 ->orWhere('tahun_pengadaan', 'LIKE', '%' . $this->search . '%')
                 ->paginate($this->dataPerPage);
         }
-        // dd($data);
         return view('livewire.inventaris-index', [
             'inventaris' => $data
         ]);
@@ -53,8 +52,6 @@ class InventarisIndex extends Component {
             'verifikasi' => $inventaris->verified_at,
             'aset' => $inventaris->jenis_inventarisasi == 'masuk' ? $inventaris->aset : $inventaris->inventaris_keluar,
         ];
-        // dd($inventaris->inventaris_keluar);
-        // dd($this->dataInventaris);
         $this->dispatch('open-modal');
     }
 }
