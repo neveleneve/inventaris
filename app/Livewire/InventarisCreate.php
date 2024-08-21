@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Inventaris;
 use App\Models\Item;
 use App\Models\JenisAset;
 use Livewire\Attributes\Validate;
@@ -15,12 +16,26 @@ class InventarisCreate extends Component {
     // public $jenisInv = 'keluar';
     // public $jenisInv = 'masuk';
 
-    #[Validate('required')]
+    #[Validate('required', as: 'Tahun')]
     public $tahun = '';
 
     #region data aset masuk
-    public $dataAsetTambah = [];
     public $jmlAset = 0;
+    #[Validate(
+        [
+            'dataAsetTambah' => 'required_if:jenisInv,masuk',
+            'dataAsetTambah.*.nama' => 'required_if:jenisInv,masuk',
+            'dataAsetTambah.*.jenis' => 'required_if:jenisInv,masuk',
+            'dataAsetTambah.*.total' => 'required_if:jenisInv,masuk|gte:1|numeric',
+        ],
+        attribute: [
+            'dataAsetTambah' => 'Data aset yang akan ditambah',
+            'dataAsetTambah.*.nama' => 'Nama aset',
+            'dataAsetTambah.*.jenis' => 'Jenis aset',
+            'dataAsetTambah.*.total' => 'Total aset',
+        ]
+    )]
+    public $dataAsetTambah = [];
     #endregion
 
     #region data aset keluar
@@ -28,11 +43,23 @@ class InventarisCreate extends Component {
     public $selectDataAsetTerpilih = [];
 
     public $search = '';
-    public $dataAset = [];
     public $tempSelectedDataAset = [];
-    public $dataAsetTerpilih = [];
+    public $dataAset = [];
     public $tempSelectedDataAsetTerpilih = [];
-
+    #[Validate(
+        [
+            'dataAsetTerpilih' => 'required_if:jenisInv,keluar',
+            'dataAsetTerpilih.*.keterangan' => ['required_if:jenisInv,keluar']
+        ],
+        message: [
+            'required' => ':attribute harus diisi',
+            'required_if' => ':attribute harus diisi',
+            'gte' => ':attribute harus diisi minimal :value',
+            'numeric' => ':attribute harus diisi dengan angka!',
+        ],
+        as: 'Data aset yang dipilih'
+    )]
+    public $dataAsetTerpilih = [];
     #endregion
 
     public function render() {
@@ -48,7 +75,18 @@ class InventarisCreate extends Component {
         if ($value == 'keluar') {
             $this->dataAsetTambah = [];
             $this->jmlAset = 0;
+            $this->tahun = '';
+        } elseif ($value == 'masuk') {
+            $this->tahun = '';
+            $this->dataAsetTerpilih = [];
         }
+    }
+
+    public function clearData() {
+        $this->jenisInv = null;
+        $this->tahun = '';
+        $this->dataAsetTambah = [];
+        $this->dataAsetTerpilih = [];
     }
 
     #region function aset masuk
@@ -62,12 +100,13 @@ class InventarisCreate extends Component {
     }
 
     public function deleteAset($index) {
-        $dataAsetTambah = null;
+        $dataAsetTambah = [];
         unset($this->dataAsetTambah[$index]);
         $i = 0;
         foreach ($this->dataAsetTambah as $value) {
             $dataAsetTambah[$i] = [
                 'nama' => $value['nama'],
+                'jenis' => $value['jenis'],
                 'total' => $value['total'],
             ];
             $i++;
@@ -193,14 +232,31 @@ class InventarisCreate extends Component {
             ];
         }
     }
-
     #endregion
 
     #region save data
     public function save() {
         $this->validate();
         if ($this->jenisInv == 'masuk') {
-            # code...
+            $addInventaris = Inventaris::create([
+                'kode_inventarisasi' => $this->randomString(12),
+                'tahun_pengadaan' => $this->tahun,
+                'jenis_inventarisasi' => 'masuk',
+            ]);
+            if ($addInventaris) {
+                foreach ($this->dataAsetTambah as $value) {
+                    $total = $value['total'];
+                    for ($i = 0; $i < $total; $i++) {
+                        Item::create([
+                            'name'          => $value['name'],
+                            'jenis_aset_id' => $value['jenis_id'],
+                            'inventaris_id' => $addInventaris->id,
+                            'id_item'       => $this->randomString(20),
+                        ]);
+                    }
+                }
+            }
+            $this->clearData();
         } elseif ($this->jenisInv == 'keluar') {
             # code...
         }
@@ -208,7 +264,8 @@ class InventarisCreate extends Component {
     #endregion
 
     function randomString($length = 10) {
-        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkalmnopqrstuvwxyz';
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        // $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkalmnopqrstuvwxyz';
         $string = '';
         for ($i = 0; $i < $length; $i++) {
             $randomIndex = rand(0, strlen($characters) - 1);
