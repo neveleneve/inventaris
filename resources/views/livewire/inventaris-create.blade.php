@@ -112,9 +112,9 @@
                     </table>
                 </div>
             </div>
-            <pre>
+            {{-- <pre>
                 {{ print_r($dataAsetTambah) }}
-            </pre>
+            </pre> --}}
         @elseif ($jenisInv == 'keluar')
             <div wire:loading.remove
                 wire:target.except='save, search, dataAsetTerpilih, tempSelectedDataAset, tempSelectedDataAsetTerpilih, selectDataAset, selectDataAsetTerpilih, addAsetTerpilih, deleteAsetTerpilih'>
