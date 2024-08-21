@@ -200,10 +200,14 @@
                         </div>
                     </div>
                     <div class="col-12 col-xxl">
+                        <h3 class="fw-bold">Data Aset Dipilih</h3>
                         @error('dataAsetTerpilih')
                             <span class="text-danger">*</span> <span class="fw-bold">{{ $message }}</span>
                         @enderror
-                        <h3 class="fw-bold">Data Aset Dipilih</h3>
+                        @error('dataAsetTerpilih.*.keterangan')
+                            <span class="text-danger">*</span>
+                            <span class="fw-bold text-wrap">{{ $message }}</span>
+                        @enderror
                         <table class="table table-bordered table-hover text-nowrap">
                             <thead class="table-dark">
                                 <tr>
@@ -231,6 +235,7 @@
                                         </td>
                                         <td>
                                             <textarea wire:model.live='dataAsetTerpilih.{{ $loop->index }}.keterangan' class="form-control"></textarea>
+
                                         </td>
                                     </tr>
                                 @empty
@@ -245,6 +250,9 @@
                     </div>
                 </div>
             </div>
+            {{-- <pre>
+                {{ print_r($dataAsetTerpilih) }}
+            </pre> --}}
         @endif
         @if ($jenisInv != null)
             <div class="col-12 d-grid gap-2">

@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Inventaris;
+use App\Models\InventarisKeluar;
 use App\Models\Item;
 use App\Models\JenisAset;
 use Livewire\Attributes\Validate;
@@ -49,7 +50,10 @@ class InventarisCreate extends Component {
     #[Validate(
         [
             'dataAsetTerpilih' => 'required_if:jenisInv,keluar',
-            'dataAsetTerpilih.*.keterangan' => ['required_if:jenisInv,keluar']
+            'dataAsetTerpilih.*.keterangan' => [
+                'required_if:jenisInv,keluar',
+                'min:1'
+            ]
         ],
         message: [
             'required' => ':attribute harus diisi',
@@ -57,7 +61,10 @@ class InventarisCreate extends Component {
             'gte' => ':attribute harus diisi minimal :value',
             'numeric' => ':attribute harus diisi dengan angka!',
         ],
-        as: 'Data aset yang dipilih'
+        attribute: [
+            'dataAsetTerpilih' => 'Data aset yang dipilih',
+            'dataAsetTerpilih.*.keterangan' => 'Keterangan data aset yang dipilih',
+        ]
     )]
     public $dataAsetTerpilih = [];
     #endregion
@@ -248,8 +255,8 @@ class InventarisCreate extends Component {
                     $total = $value['total'];
                     for ($i = 0; $i < $total; $i++) {
                         Item::create([
-                            'name'          => $value['name'],
-                            'jenis_aset_id' => $value['jenis_id'],
+                            'name'          => $value['nama'],
+                            'jenis_aset_id' => $value['jenis'],
                             'inventaris_id' => $addInventaris->id,
                             'id_item'       => $this->randomString(20),
                         ]);
@@ -258,7 +265,21 @@ class InventarisCreate extends Component {
             }
             $this->clearData();
         } elseif ($this->jenisInv == 'keluar') {
-            # code...
+            $addInventaris = Inventaris::create([
+                'kode_inventarisasi' => $this->randomString(12),
+                'tahun_pengadaan' => $this->tahun,
+                'jenis_inventarisasi' => 'keluar',
+            ]);
+            if ($addInventaris) {
+                foreach ($this->dataAsetTerpilih as $value) {
+                    InventarisKeluar::create([
+                        'item_id' => $value['id'],
+                        'inventaris_id' => $addInventaris->id,
+                        'keterangan' => $value['keterangan'],
+                    ]);
+                }
+            }
+            $this->clearData();
         }
     }
     #endregion
