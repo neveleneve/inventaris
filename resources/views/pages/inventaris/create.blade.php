@@ -16,6 +16,9 @@
                     </div>
                 </div>
             </div>
+            @stack('asets')
+            @stack('arah')
+            @stack('selected_asets')
         </div>
     </div>
 @endsection

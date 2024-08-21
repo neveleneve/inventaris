@@ -9,7 +9,7 @@
             </select>
         </div>
         <div class="col-lg-12 justify-content-center" wire:loading wire:loading.class='d-flex'
-            wire:target.except='addAset, dataAsetKeluar, search, toggleTextarea'>
+            wire:target.except='addAset, dataAsetKeluar, search, dataAsetTerpilih, tempSelectedDataAset, tempSelectedDataAsetTerpilih, selectDataAset, selectDataAsetTerpilih, addAsetTerpilih, deleteAsetTerpilih'>
             <div class="spinner-border" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
@@ -38,7 +38,7 @@
                         </thead>
                         <tbody>
                             @if ($jmlAset > 0)
-                                @for ($i = 0; $i < count($dataAset); $i++)
+                                @for ($i = 0; $i < count($dataAsetTambah); $i++)
                                     <tr>
                                         <td class="text-center">
                                             <button class="btn btn-sm btn-outline-danger rounded-5"
@@ -49,7 +49,7 @@
                                         <td>
                                             <input type="text" class="form-control" id="namaaset{{ $i }}"
                                                 name="namaaset[]" placeholder="Nama Aset"
-                                                wire:model.live='dataAset.{{ $i }}.nama'>
+                                                wire:model.live='dataAsetTambah.{{ $i }}.nama'>
                                         </td>
                                         <td>
                                             <select name="jenisaset[]" id="jenisaset{{ $i }}"
@@ -63,7 +63,7 @@
                                         <td>
                                             <input type="number" class="form-control" id="totalaset{{ $i }}"
                                                 name="totalaset[]" placeholder="Total Aset"
-                                                wire:model.live='dataAset.{{ $i }}.total'>
+                                                wire:model.live='dataAsetTambah.{{ $i }}.total'>
                                         </td>
                                     </tr>
                                 @endfor
@@ -90,7 +90,8 @@
                 </div>
             </div>
         @elseif ($jenisInv == 'keluar')
-            <div wire:loading.remove wire:target.except='dataAsetKeluar, search, toggleTextarea'>
+            <div wire:loading.remove
+                wire:target.except='dataAsetKeluar, search, dataAsetTerpilih, tempSelectedDataAset, tempSelectedDataAsetTerpilih, selectDataAset, selectDataAsetTerpilih, addAsetTerpilih, deleteAsetTerpilih'>
                 <div class="col-12 mb-3">
                     <label for="tahun" class="fw-bold">Tahun Pengurangan Inventaris</label>
                     <select name="tahun" id="tahun" class="form-select rounded-5">
@@ -101,47 +102,112 @@
                     </select>
                     <hr class="mb-0">
                 </div>
-                <div class="col-12 mb-3">
-                    <input type="text" class="form-control rounded-5" placeholder="Pencarian..."
-                        wire:model.live='search'>
-                </div>
-                <div class="col-12 mb-3">
-                    <table class="table table-hover table-bordered">
-                        <thead class="table-dark">
-                            <tr>
-                                <th></th>
-                                <th>Kode Aset</th>
-                                <th>Nama Aset</th>
-                                <th>Keterangan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($aset as $itemAset)
+                <div class="row justify-content-center">
+                    <div class="col-12 col-xxl">
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <input type="text" class="form-control rounded-5" placeholder="Pencarian..."
+                                    wire:model.live='search'>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered text-nowrap">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th></th>
+                                        <th>Kode Aset</th>
+                                        <th>Nama Aset</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($dataAset as $itemAset)
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        wire:model.live='selectDataAset' value="{{ $itemAset['id'] }}">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {{ $itemAset['id_item'] }}
+                                            </td>
+                                            <td>
+                                                {{ $itemAset['name'] }}
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="4">
+                                                <h3 class="text-center fw-bold">Data Aset Kosong</h3>
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col col-xxl-1 align-item-center">
+                        <div class="row mb-3">
+                            <div class="col-12 text-center">
+                                <button class="btn btn-sm btn-outline-warning" type="button"
+                                    wire:click='addAsetTerpilih'
+                                    {{ count($tempSelectedDataAset) <= 0 ? 'disabled' : null }}>
+                                    <i class="bi bi-chevron-right d-none d-xxl-block"></i>
+                                    <i class="bi bi-chevron-down d-xxl-none"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-12 text-center">
+                                <button class="btn btn-sm btn-outline-warning" type="button"
+                                    wire:click='deleteAsetTerpilih'
+                                    {{ count($tempSelectedDataAsetTerpilih) <= 0 ? 'disabled' : null }}>
+                                    <i class="bi bi-chevron-left d-none d-xxl-block"></i>
+                                    <i class="bi bi-chevron-up d-xxl-none"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xxl">
+                        <table class="table table-bordered table-hover text-nowrap">
+                            <thead class="table-dark">
                                 <tr>
-                                    <td>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        {{ $itemAset->id_item }}
-                                    </td>
-                                    <td>
-                                        {{ $itemAset->name }}
-                                    </td>
-                                    <td>
-                                        <textarea cols="30" class="form-control form-control-sm" style='resize: none;' disabled></textarea>
-                                    </td>
+                                    <th></th>
+                                    <th>Kode Aset</th>
+                                    <th>Nama Aset</th>
+                                    <th>Keterangan <span title="Harus diisi" class="text-danger">*</span></th>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="4">
-                                        <h3 class="text-center fw-bold">Data Aset Kosong</h3>
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @forelse ($dataAsetTerpilih as $itemTerpilih)
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                    wire:model.live='selectDataAsetTerpilih'
+                                                    value="{{ $itemTerpilih['id'] }}">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {{ $itemTerpilih['id_item'] }}
+                                        </td>
+                                        <td>
+                                            {{ $itemTerpilih['name'] }}
+                                        </td>
+                                        <td>
+                                            <textarea wire:model.live='dataAsetTerpilih.{{ $loop->index }}.keterangan' class="form-control"></textarea>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4">
+                                            <h3 class="text-center fw-bold">Data Kosong</h3>
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         @endif
@@ -153,7 +219,4 @@
             </div>
         @endif
     </div>
-    <pre>
-        {{ print_r($dataAsetKeluar) }}
-    </pre>
 </div>
