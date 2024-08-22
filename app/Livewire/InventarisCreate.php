@@ -262,8 +262,20 @@ class InventarisCreate extends Component {
                         ]);
                     }
                 }
+                $alert = [
+                    'title' => 'Berhasil',
+                    'text' => 'Berhasil menambah data inventaris masuk!',
+                    'icon' => 'success',
+                ];
+            } else {
+                $alert = [
+                    'title' => 'Gagal',
+                    'text' => 'Gagal menambah data inventaris masuk!',
+                    'icon' => 'error',
+                ];
             }
             $this->clearData();
+            $this->dispatch('alert',  data: $alert);
         } elseif ($this->jenisInv == 'keluar') {
             $addInventaris = Inventaris::create([
                 'kode_inventarisasi' => $this->randomString(12),
@@ -278,8 +290,20 @@ class InventarisCreate extends Component {
                         'keterangan' => $value['keterangan'],
                     ]);
                 }
+                $alert = [
+                    'title' => 'Berhasil',
+                    'text' => 'Berhasil menambah data inventaris keluar!',
+                    'icon' => 'success',
+                ];
+            } else {
+                $alert = [
+                    'title' => 'Gagal',
+                    'text' => 'Gagal menambah data inventaris keluar!',
+                    'icon' => 'error',
+                ];
             }
             $this->clearData();
+            $this->dispatch('alert', data: $alert);
         }
     }
     #endregion

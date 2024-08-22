@@ -263,3 +263,15 @@
         @endif
     </div>
 </div>
+
+@push('customjs')
+    <script>
+        Livewire.on('alert', (event) => {
+            Swal.fire({
+                title: event.data.title,
+                text: event.data.text,
+                icon: event.data.icon
+            })
+        });
+    </script>
+@endpush

@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Inventaris;
+use Illuminate\Pagination\Paginator;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -53,5 +54,12 @@ class InventarisIndex extends Component {
             'aset' => $inventaris->jenis_inventarisasi == 'masuk' ? $inventaris->aset : $inventaris->inventaris_keluar,
         ];
         $this->dispatch('open-modal');
+    }
+
+    public function setPage($url) {
+        $this->currentPage = explode('page=', $url)[1];
+        Paginator::currentPageResolver(function () {
+            return $this->currentPage;
+        });
     }
 }
