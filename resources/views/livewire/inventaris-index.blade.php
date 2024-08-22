@@ -4,6 +4,12 @@
             wire:model.live='search'>
     </div>
     @include('layouts.dataperpage')
+    <div class="col-lg-12 justify-content-center" wire:loading wire:loading.class='d-flex'
+        wire:target.except='getDataInventaris'>
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
     <div class="col-lg-12">
         <div class="table-responsive">
             <table class="table table-bordered text-center text-nowrap">
@@ -171,10 +177,6 @@
         Livewire.on('open-modal', event => {
             const modal = new bootstrap.Modal(document.getElementById(event.target));
             modal.show();
-        });
-        Livewire.on('hide-modal', event => {
-            const modal = new bootstrap.Modal(document.getElementById(event.target));
-            modal.hide();
         });
         Livewire.on('alert', event => {
             Swal.fire({
