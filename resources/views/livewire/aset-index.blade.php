@@ -4,13 +4,14 @@
             id="search">
     </div>
     @include('layouts.dataperpage')
-    <div class="col-lg-12 justify-content-center" wire:loading wire:loading.class='d-flex'>
+    <div class="col-lg-12 justify-content-center" wire:loading wire:loading.class='d-flex'
+        wire:target.except='getDataAset'>
         <div class="spinner-border" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
     </div>
     <div class="col-lg-12">
-        <div class="table-responsive" wire:loading.remove>
+        <div class="table-responsive" wire:loading.remove wire:target.except='getDataAset'>
             <table class="table table-bordered text-center text-nowrap">
                 <thead class="table-dark">
                     <tr>

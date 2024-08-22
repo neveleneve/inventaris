@@ -43,14 +43,6 @@
                                                 Lihat
                                             </button>
                                         @endcan
-                                        @if (!$item->verified_at)
-                                            @can('inventaris delete')
-                                                <a href="{{ route('inventaris.destroy', ['inventari' => $item->id]) }}"
-                                                    class="btn btn-sm btn-danger fw-bold">
-                                                    Hapus
-                                                </a>
-                                            @endcan
-                                        @endif
                                     </div>
                                 </td>
                             @endcanany
@@ -146,10 +138,22 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    @if (!$item->verified_at)
+                    @if (!$dataInventaris['verifikasi'])
                         @can('inventaris verification')
-                            <button class="btn btn-success rounded-5 fw-bold">
+                            <button class="btn btn-success rounded-5 fw-bold"
+                                wire:click='verifikasi({{ $dataInventaris['id'] }})'>
                                 Verifikasi
+                            </button>
+                        @endcan
+                        @can('inventaris delete')
+                            <button class="btn btn-warning rounded-5 fw-bold">
+                                Hapus
+                            </button>
+                        @endcan
+                    @else
+                        @can('inventaris report')
+                            <button class="btn btn-success rounded-5 fw-bold">
+                                Cetak Bukti Inventarisasi
                             </button>
                         @endcan
                     @endif
@@ -165,8 +169,19 @@
 @push('customjs')
     <script>
         Livewire.on('open-modal', event => {
-            const modal = new bootstrap.Modal(document.getElementById('modalLihat'));
+            const modal = new bootstrap.Modal(document.getElementById(event.target));
             modal.show();
+        });
+        Livewire.on('hide-modal', event => {
+            const modal = new bootstrap.Modal(document.getElementById(event.target));
+            modal.hide();
+        });
+        Livewire.on('alert', event => {
+            Swal.fire({
+                title: event.data.title,
+                text: event.data.text,
+                icon: event.data.icon
+            });
         });
     </script>
 @endpush

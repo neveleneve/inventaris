@@ -21,6 +21,7 @@ class PermissionSeeder extends Seeder {
             'inventaris delete',
             'inventaris show',
             'inventaris verification',
+            'inventaris report',
             'report index',
             'report show',
         ];
@@ -48,6 +49,7 @@ class PermissionSeeder extends Seeder {
             'inventaris create',
             'inventaris delete',
             'inventaris show',
+            'inventaris report',
             'report index',
             'report show',
         ];

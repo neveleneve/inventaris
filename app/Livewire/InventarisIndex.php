@@ -16,6 +16,7 @@ class InventarisIndex extends Component {
     public $currentPage;
 
     public $dataInventaris = [
+        'id' => '',
         'kode' => '',
         'jenis' => '',
         'tahun' => '',
@@ -42,9 +43,9 @@ class InventarisIndex extends Component {
         ]);
     }
 
-    public function getDataInventaris($id) {
-        $inventaris = Inventaris::with('aset', 'inventaris_keluar', 'inventaris_keluar.aset')->find($id);
+    public function getDataInventaris(Inventaris $inventaris) {
         $this->dataInventaris = [
+            'id' => $inventaris->id,
             'kode' => $inventaris->kode_inventarisasi,
             'jenis' => ucfirst($inventaris->jenis_inventarisasi),
             'tahun' => $inventaris->tahun_pengadaan,
@@ -53,7 +54,27 @@ class InventarisIndex extends Component {
             'verifikasi' => $inventaris->verified_at,
             'aset' => $inventaris->jenis_inventarisasi == 'masuk' ? $inventaris->aset : $inventaris->inventaris_keluar,
         ];
-        $this->dispatch('open-modal');
+        $this->dispatch('open-modal', target: 'modalLihat');
+    }
+
+    public function verifikasi(Inventaris $inventaris) {
+        if ($inventaris) {
+            $inventaris->update([
+                'verified_at' => date('Y-m-d H:i:s')
+            ]);
+            $alert = [
+                'title' => 'Berhasil',
+                'text' => 'Berhasil verifikasi inventarisasi ' . ucwords($inventaris->jenis_inventarisasi) . '!',
+                'icon' => 'success',
+            ];
+        } else {
+            $alert = [
+                'title' => 'Gagal',
+                'text' => 'Gagal verifikasi inventarisasi!',
+                'icon' => 'error',
+            ];
+        }
+        $this->dispatch('alert', data: $alert);
     }
 
     public function setPage($url) {
