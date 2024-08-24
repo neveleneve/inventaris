@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <form class="row" method="GET" wire:submit='cetak' target="__blank">
+                <form class="row" wire:submit='cetak' target="__blank">
                     <div class="col-12 mb-3">
                         <label for="jenis" class="fw-bold">Jenis Laporan</label>
                         <select name="jenis" id="jenis" class="form-select rounded-5"
@@ -76,8 +76,7 @@
     @push('customjs')
         <script>
             Livewire.on('open-report', event => {
-                // event.preventDefault(); // Prevent the default submission behavior
-                window.open(event.route, '_blank'); // Open the new tab with the desired URL
+                window.open(event.route, '_blank');
             });
         </script>
     @endpush

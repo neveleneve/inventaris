@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Inventaris;
 use App\Models\Item;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller {
@@ -17,6 +18,7 @@ class ReportController extends Controller {
 
     public function cetak(Request $request, $jenis) {
         if ($jenis == 'aset_tersedia') {
+            $title = 'Aset Tersedia';
             $data = Item::with('inventaris', 'jenis')
                 ->whereHas('inventaris', function ($q) {
                     $q->where('verified_at', '!=', null)
@@ -29,12 +31,26 @@ class ReportController extends Controller {
                     });
                 })
                 ->get();
+            $datas = [
+                'title' => $title,
+                'data' => $data
+            ];
         } elseif ($jenis == 'tahunan') {
+            $title = 'Inventarisasi Tahunan';
+            $tahun = $request->tahun;
             $data = Inventaris::where([
-                'tahun_pengadaan' => $request->tahun,
+                'tahun_pengadaan' => $tahun,
                 ['verified_at', '!=', null],
-            ])->get();
+            ])
+                ->withCount('aset', 'inventaris_keluar')
+                ->get();
+            $datas = [
+                'title' => $title,
+                'tahun' => $tahun,
+                'data' => $data
+            ];
         } elseif ($jenis == 'aset_masuk') {
+            $title = 'Aset Masuk';
             $tahun = $request->tahun;
             $data = Item::with('inventaris', 'jenis')
                 ->whereHas('inventaris', function ($q) use ($tahun) {
@@ -43,7 +59,13 @@ class ReportController extends Controller {
                         ->where('tahun_pengadaan', $tahun);
                 })
                 ->get();
+            $datas = [
+                'title' => $title,
+                'tahun' => $tahun,
+                'data' => $data
+            ];
         } elseif ($jenis == 'aset_keluar') {
+            $title = 'Aset Keluar';
             $tahun = $request->tahun;
             $data = Item::with('inventaris_keluar', 'jenis')
                 ->whereHas('inventaris_keluar', function ($q) use ($tahun) {
@@ -54,7 +76,14 @@ class ReportController extends Controller {
                     });
                 })
                 ->get();
+            $datas = [
+                'title' => $title,
+                'tahun' => $tahun,
+                'data' => $data
+            ];
         }
-        dd($data);
+
+        $pdf = PDF::loadView('pages.report.pdf', $datas)->setPaper('A4', 'landscape');
+        return $pdf->stream('report_' . $jenis . '-' . strtotime(date('Y-m-d H:i:s')) . '.pdf');
     }
 }
