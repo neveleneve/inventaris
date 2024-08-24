@@ -9,6 +9,7 @@
     {{-- <link rel="stylesheet" href="{{ asset('assets/adminkit/static/css/app.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('assets/adminkit/static/css/app-pro.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/bootstrap-icons/font/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.css') }}">
     @livewireStyles
     @stack('customcss')
 </head>

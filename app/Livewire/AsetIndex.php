@@ -71,7 +71,7 @@ class AsetIndex extends Component {
             'kode' => $item->id_item,
             'nama' => $item->name,
             'tahun' => $item->inventaris->tahun_pengadaan,
-            // 'jenis' => '',
+            'kode_inventaris' => $item->inventaris->kode_inventarisasi,
             'jenis' => $item->jenis->name,
         ];
 

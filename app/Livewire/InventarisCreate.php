@@ -17,8 +17,11 @@ class InventarisCreate extends Component {
     // public $jenisInv = 'keluar';
     // public $jenisInv = 'masuk';
 
-    #[Validate('required', as: 'Tahun')]
-    public $tahun = '';
+    #[Validate('required_if:jenisInv,masuk', as: 'Tahun Masuk')]
+    public $tahunMasuk = '';
+
+    #[Validate('required_if:jenisInv,keluar', as: 'Tahun Keluar')]
+    public $tahunKeluar = '';
 
     #region data aset masuk
     public $jmlAset = 0;
@@ -82,16 +85,17 @@ class InventarisCreate extends Component {
         if ($value == 'keluar') {
             $this->dataAsetTambah = [];
             $this->jmlAset = 0;
-            $this->tahun = '';
+            $this->tahunMasuk = '';
         } elseif ($value == 'masuk') {
-            $this->tahun = '';
+            $this->tahunKeluar = '';
             $this->dataAsetTerpilih = [];
         }
     }
 
     public function clearData() {
         $this->jenisInv = null;
-        $this->tahun = '';
+        $this->tahunMasuk = '';
+        $this->tahunKeluar = '';
         $this->dataAsetTambah = [];
         $this->dataAsetTerpilih = [];
     }
@@ -247,7 +251,7 @@ class InventarisCreate extends Component {
         if ($this->jenisInv == 'masuk') {
             $addInventaris = Inventaris::create([
                 'kode_inventarisasi' => $this->randomString(12),
-                'tahun_pengadaan' => $this->tahun,
+                'tahun_pengadaan' => $this->tahunMasuk,
                 'jenis_inventarisasi' => 'masuk',
             ]);
             if ($addInventaris) {
@@ -279,7 +283,7 @@ class InventarisCreate extends Component {
         } elseif ($this->jenisInv == 'keluar') {
             $addInventaris = Inventaris::create([
                 'kode_inventarisasi' => $this->randomString(12),
-                'tahun_pengadaan' => $this->tahun,
+                'tahun_pengadaan' => $this->tahunKeluar,
                 'jenis_inventarisasi' => 'keluar',
             ]);
             if ($addInventaris) {

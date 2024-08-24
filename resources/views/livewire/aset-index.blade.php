@@ -70,7 +70,10 @@
                     <input type="text" id="nama" class="form-control mb-3" wire:model='dataAset.nama' readonly>
                     <label for="jenis" class="fw-bold">Jenis Aset</label>
                     <input type="text" id="jenis" class="form-control mb-3" wire:model='dataAset.jenis' readonly>
-                    <label for="nama" class="fw-bold">Tahun Anggaran</label>
+                    <label for="kode_inv" class="fw-bold">Kode Inventarisasi</label>
+                    <input type="text" id="kode_inv" class="form-control mb-3" wire:model='dataAset.kode_inventaris'
+                        readonly>
+                    <label for="tahun" class="fw-bold">Tahun Anggaran</label>
                     <input type="text" id="tahun" class="form-control" wire:model='dataAset.tahun' readonly>
                 </div>
                 <div class="modal-footer">

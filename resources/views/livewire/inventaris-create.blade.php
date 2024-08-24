@@ -1,7 +1,7 @@
 <div>
     <div class="row justify-content-center">
         <div class="col-lg-12 justify-content-center" wire:loading wire:loading.class='d-flex'
-            wire:target.except='tahun, addAset, dataAsetTambah,deleteAset, search, dataAsetTerpilih, tempSelectedDataAset, tempSelectedDataAsetTerpilih, selectDataAset, selectDataAsetTerpilih, addAsetTerpilih, deleteAsetTerpilih'>
+            wire:target.except='tahunMasuk, tahunKeluar, addAset, dataAsetTambah,deleteAset, search, dataAsetTerpilih, tempSelectedDataAset, tempSelectedDataAsetTerpilih, selectDataAset, selectDataAsetTerpilih, addAsetTerpilih, deleteAsetTerpilih'>
             <div class="spinner-border" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
@@ -15,16 +15,17 @@
             </select>
         </div>
         @if ($jenisInv == 'masuk')
-            <div wire:loading.remove wire:target='jenisInv' wire:target.except='addAset, tahun, dataAsetTambah, save'>
+            <div wire:loading.remove wire:target='jenisInv'
+                wire:target.except='addAset, tahunMasuk, dataAsetTambah, save'>
                 <div class="col-12 mb-3">
                     <label for="tahun" class="fw-bold">Tahun Pengadaan Inventaris</label>
-                    <select name="tahun" id="tahun" class="form-select rounded-5" wire:model.live='tahun'>
+                    <select id="tahun" class="form-select rounded-5" wire:model.live='tahunMasuk'>
                         <option value="" selected hidden>Pilih Tahun Pengadaan Inventaris</option>
                         @for ($i = 5; $i >= 0; $i--)
                             <option value="{{ date('Y') - $i }}">{{ date('Y') - $i }}</option>
                         @endfor
                     </select>
-                    @error('tahun')
+                    @error('tahunMasuk')
                         <span class="text-danger">*</span> <span class="fw-bold">{{ $message }}</span>
                     @enderror
                     <hr class="mb-0">
@@ -117,16 +118,16 @@
             </pre> --}}
         @elseif ($jenisInv == 'keluar')
             <div wire:loading.remove
-                wire:target.except='save, search, dataAsetTerpilih, tempSelectedDataAset, tempSelectedDataAsetTerpilih, selectDataAset, selectDataAsetTerpilih, addAsetTerpilih, deleteAsetTerpilih'>
+                wire:target.except='tahunKeluar, save, search, dataAsetTerpilih, tempSelectedDataAset, tempSelectedDataAsetTerpilih, selectDataAset, selectDataAsetTerpilih, addAsetTerpilih, deleteAsetTerpilih'>
                 <div class="col-12 mb-3">
                     <label for="tahun" class="fw-bold">Tahun Pengurangan Inventaris</label>
-                    <select name="tahun" id="tahun" class="form-select rounded-5" wire:model.live='tahun'>
+                    <select id="tahun" class="form-select rounded-5" wire:model.live='tahunKeluar'>
                         <option value="" selected hidden>Pilih Tahun Pengurangan Inventaris</option>
                         @for ($i = 5; $i >= 0; $i--)
                             <option value="{{ date('Y') - $i }}">{{ date('Y') - $i }}</option>
                         @endfor
                     </select>
-                    @error('tahun')
+                    @error('tahunKeluar')
                         <span class="text-danger">*</span> <span class="fw-bold">{{ $message }}</span>
                     @enderror
                     <hr class="mb-0">

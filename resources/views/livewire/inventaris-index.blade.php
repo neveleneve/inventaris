@@ -4,6 +4,13 @@
             wire:model.live='search'>
     </div>
     @include('layouts.dataperpage')
+    {{-- <div class="col-lg-2 mb-2">
+        <select name="verified" id="verified" class="form-select form-select-sm rounded-5">
+            <option value="all">Semua</option>
+            <option value="verified">Terverifikasi</option>
+            <option value="unverified">Belum Terverifikasi</option>
+        </select>
+    </div> --}}
     <div class="col-lg-12 justify-content-center" wire:loading wire:loading.class='d-flex'
         wire:target.except='getDataInventaris'>
         <div class="spinner-border" role="status">

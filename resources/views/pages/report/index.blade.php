@@ -8,5 +8,6 @@
                 <hr>
             </div>
         </div>
+        @livewire('report-index')
     </div>
 @endsection
