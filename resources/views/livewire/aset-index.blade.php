@@ -15,6 +15,7 @@
             <table class="table table-bordered text-center text-nowrap">
                 <thead class="table-dark">
                     <tr>
+                        <th>Kode Inventarisasi</th>
                         <th>Kode Aset</th>
                         <th>Nama</th>
                         <th>Tahun Pengadaan</th>
@@ -26,6 +27,7 @@
                 <tbody>
                     @forelse ($items as $item)
                         <tr>
+                            <td>{{ $item->inventaris->kode_inventarisasi }}</td>
                             <td>{{ $item->id_item }}</td>
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->inventaris->tahun_pengadaan }}</td>
@@ -44,7 +46,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4">
+                            <td colspan="10">
                                 <h2 class="text-center fw-bold">Data Kosong</h2>
                             </td>
                         </tr>

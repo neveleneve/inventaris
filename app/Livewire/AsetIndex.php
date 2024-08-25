@@ -29,12 +29,6 @@ class AsetIndex extends Component {
                     $q->where('verified_at', '!=', null)
                         ->where('jenis_inventarisasi', 'masuk');
                 })
-                ->whereDoesntHave('inventaris_keluar', function ($q) {
-                    $q->whereHas('inventaris', function ($subQuery) {
-                        $subQuery->where('jenis_inventarisasi', 'keluar')
-                            ->where('verified_at', '!=', null);
-                    });
-                })
                 ->paginate($this->dataPerPage);
         } else {
             $data = Item::with('inventaris', 'jenis')

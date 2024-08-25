@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return redirect(route('login'));
 })->name('landing');
@@ -36,3 +37,4 @@ Route::resource('aset', ItemController::class)->only([
 Route::resource('inventaris', InventarisController::class);
 Route::get('report', [App\Http\Controllers\ReportController::class, 'index'])->name('report.index');
 Route::get('report/cetak/{jenis}', [App\Http\Controllers\ReportController::class, 'cetak'])->name('report.cetak');
+Route::get('report/inventaris', [App\Http\Controllers\ReportController::class, 'inventaris'])->name('report.inventaris');

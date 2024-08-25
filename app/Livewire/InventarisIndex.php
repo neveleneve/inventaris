@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Models\Inventaris;
+use App\Models\InventarisKeluar;
+use App\Models\Item;
 use Illuminate\Pagination\Paginator;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -82,5 +84,34 @@ class InventarisIndex extends Component {
         Paginator::currentPageResolver(function () {
             return $this->currentPage;
         });
+    }
+
+    public function hapusInventaris(Inventaris $inventaris) {
+        $id = $inventaris->id;
+        $jenis = $inventaris->jenis_inventarisasi;
+
+        $delete = $inventaris->delete();
+        if ($delete) {
+            if ($jenis == 'masuk') {
+                Item::where('inventaris_id', $id)
+                    ->delete();
+            } elseif ($jenis == 'keluar') {
+                InventarisKeluar::where('inventaris_id', $id)
+                    ->delete();
+            }
+            $this->dispatch('alert', data: [
+                'title' => 'Berhasil',
+                'text' => 'Berhasil menghapus data inventarisasi',
+                'icon' => 'success'
+            ]);
+        }
+    }
+
+    public function cetakInventarisasi(Inventaris $inventaris) {
+        $route = route('report.inventaris', [
+            'id' => $inventaris->id,
+            'kode' => $inventaris->kode_inventarisasi
+        ]);
+        $this->dispatch('open-report', route: $route);
     }
 }

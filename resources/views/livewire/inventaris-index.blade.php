@@ -12,7 +12,7 @@
         </select>
     </div> --}}
     <div class="col-lg-12 justify-content-center" wire:loading wire:loading.class='d-flex'
-        wire:target.except='getDataInventaris'>
+        wire:target.except='getDataInventaris, verifikasi, hapusInventaris, cetakInventarisasi'>
         <div class="spinner-border" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
@@ -153,19 +153,21 @@
                 <div class="modal-footer">
                     @if (!$dataInventaris['verifikasi'])
                         @can('inventaris verification')
-                            <button class="btn btn-success rounded-5 fw-bold"
+                            <button class="btn btn-success rounded-5 fw-bold" data-bs-dismiss="modal"
                                 wire:click='verifikasi({{ $dataInventaris['id'] }})'>
                                 Verifikasi
                             </button>
                         @endcan
                         @can('inventaris delete')
-                            <button class="btn btn-warning rounded-5 fw-bold">
+                            <button class="btn btn-warning rounded-5 fw-bold" data-bs-dismiss="modal"
+                                wire:click='hapusInventaris({{ $dataInventaris['id'] }})'>
                                 Hapus
                             </button>
                         @endcan
                     @else
                         @can('inventaris report')
-                            <button class="btn btn-success rounded-5 fw-bold">
+                            <button class="btn btn-success rounded-5 fw-bold" data-bs-dismiss="modal"
+                                wire:click='cetakInventarisasi({{ $dataInventaris['id'] }})'>
                                 Cetak Bukti Inventarisasi
                             </button>
                         @endcan
@@ -185,12 +187,19 @@
             const modal = new bootstrap.Modal(document.getElementById(event.target));
             modal.show();
         });
+        Livewire.on('hide-modal', event => {
+            const myModal = new bootstrap.Modal(document.getElementById(event.target));
+            myModal.hide();
+        });
         Livewire.on('alert', event => {
             Swal.fire({
                 title: event.data.title,
                 text: event.data.text,
                 icon: event.data.icon
             });
+        });
+        Livewire.on('open-report', event => {
+            window.open(event.route, '_blank');
         });
     </script>
 @endpush

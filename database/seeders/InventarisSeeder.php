@@ -11,8 +11,18 @@ use Illuminate\Database\Seeder;
 class InventarisSeeder extends Seeder {
     public function run(): void {
         $item = [
-            'name'      => 'HP Victus 17" RAM 16GB SSD 1TB',
-            'jenis_id'  => 1
+            [
+                'name'      => 'HP Victus Gaming 17" RAM 16GB SSD 1TB',
+                'jenis_id'  => 1
+            ],
+            [
+                'name'      => 'ROG Zephyrus G16 15" RAM 32GB SSD 1TB',
+                'jenis_id'  => 2
+            ],
+            [
+                'name'      => 'Lemari Buku',
+                'jenis_id'  => 2
+            ],
         ];
         $pengadaan = 3;
         for ($i = 0; $i < $pengadaan; $i++) {
@@ -24,9 +34,10 @@ class InventarisSeeder extends Seeder {
             ]);
             if ($inventarisMasuk) {
                 for ($j = 0; $j < rand(5, 8); $j++) {
+                    $rand = rand(0, 2);
                     Item::create([
-                        'name'          => $item['name'],
-                        'jenis_aset_id' => $item['jenis_id'],
+                        'name'          => $item[$rand]['name'],
+                        'jenis_aset_id' => $item[$rand]['jenis_id'],
                         'inventaris_id' => $inventarisMasuk->id,
                         'id_item'       => $this->randomString(20),
                     ]);
