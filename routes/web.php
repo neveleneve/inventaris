@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\ForecastController;
 use App\Http\Controllers\InventarisController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\JenisAsetController;
 use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +30,7 @@ Auth::routes([
 ]);
 
 Route::get('dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+Route::resource('jenis-aset', JenisAsetController::class);
 Route::resource('aset', ItemController::class)->only([
     'index',
     'show',
@@ -35,6 +38,7 @@ Route::resource('aset', ItemController::class)->only([
     'update',
 ]);
 Route::resource('inventaris', InventarisController::class);
+Route::resource('peramalan', ForecastController::class);
 Route::get('report', [App\Http\Controllers\ReportController::class, 'index'])->name('report.index');
 Route::get('report/cetak/{jenis}', [App\Http\Controllers\ReportController::class, 'cetak'])->name('report.cetak');
 Route::get('report/inventaris', [App\Http\Controllers\ReportController::class, 'inventaris'])->name('report.inventaris');

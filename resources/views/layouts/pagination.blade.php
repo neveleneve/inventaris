@@ -1,5 +1,5 @@
 @if ($paginator->hasPages())
-    <div wire:loading.remove>
+    <div>
         <div class="row mt-3">
             <div class="col-lg-6 text-lg-start text-center mb-lg-0 mb-3">
                 <span>

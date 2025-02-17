@@ -17,11 +17,15 @@ class InventarisSeeder extends Seeder {
             ],
             [
                 'name'      => 'ROG Zephyrus G16 15" RAM 32GB SSD 1TB',
-                'jenis_id'  => 2
+                'jenis_id'  => 1
             ],
             [
                 'name'      => 'Lemari Buku',
                 'jenis_id'  => 2
+            ],
+            [
+                'name'      => 'Pena Pilot',
+                'jenis_id'  => 3
             ],
         ];
         $pengadaan = 3;
@@ -34,7 +38,7 @@ class InventarisSeeder extends Seeder {
             ]);
             if ($inventarisMasuk) {
                 for ($j = 0; $j < rand(5, 8); $j++) {
-                    $rand = rand(0, 2);
+                    $rand = rand(0, 3);
                     Item::create([
                         'name'          => $item[$rand]['name'],
                         'jenis_aset_id' => $item[$rand]['jenis_id'],

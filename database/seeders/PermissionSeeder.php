@@ -14,14 +14,25 @@ class PermissionSeeder extends Seeder {
     public function run(): void {
         $all = [
             'dashboard',
+
+            'jenis aset index',
+            'jenis aset create',
+            'jenis aset edit',
+            'jenis aset show',
+
             'aset index',
+            'aset edit',
             'aset show',
+
             'inventaris index',
             'inventaris create',
             'inventaris delete',
             'inventaris show',
             'inventaris verification',
             'inventaris report',
+
+            'peramalan index',
+
             'report index',
             'report show',
         ];
@@ -33,23 +44,39 @@ class PermissionSeeder extends Seeder {
 
         $ketua = [
             'dashboard',
+
             'aset index',
             'aset show',
+
             'inventaris index',
             'inventaris show',
             'inventaris verification',
+
+            'peramalan index',
+
             'report index',
             'report show',
         ];
         $admin = [
             'dashboard',
+
+            'jenis aset index',
+            'jenis aset create',
+            'jenis aset edit',
+            'jenis aset show',
+
             'aset index',
+            'aset edit',
             'aset show',
+
             'inventaris index',
             'inventaris create',
             'inventaris delete',
             'inventaris show',
             'inventaris report',
+
+            'peramalan index',
+
             'report index',
             'report show',
         ];

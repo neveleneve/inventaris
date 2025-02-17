@@ -12,7 +12,7 @@ class AsetIndex extends Component {
 
     public $search = '';
 
-    public $dataPerPage = 10;
+    public $dataPerPage = 5;
     public $currentPage;
 
     public $dataAset = [
@@ -68,7 +68,6 @@ class AsetIndex extends Component {
             'kode_inventaris' => $item->inventaris->kode_inventarisasi,
             'jenis' => $item->jenis->name,
         ];
-
         $this->dispatch('open-modal');
     }
 }

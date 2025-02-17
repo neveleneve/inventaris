@@ -14,6 +14,7 @@ class JenisAsetSeeder extends Seeder {
         $jenis = [
             'Mesin',
             'Perabotan',
+            'Alat Tulis Kantor',
         ];
 
         for ($i = 0; $i < count($jenis); $i++) {

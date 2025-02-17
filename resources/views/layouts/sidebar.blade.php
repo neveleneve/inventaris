@@ -13,6 +13,15 @@
                     </a>
                 </li>
             @endcan
+            @can('jenis aset index')
+                <li class="sidebar-item {{ Request::is('jenis-aset*') ? 'active' : null }}">
+                    <a class="sidebar-link {{ Request::is('jenis-aset*') ? 'fw-bold' : null }}"
+                        href="{{ route('jenis-aset.index') }}">
+                        <i class="bi bi-tag align-middle"></i>
+                        <span class="align-middle">Jenis Aset</span>
+                    </a>
+                </li>
+            @endcan
             @can('aset index')
                 <li class="sidebar-item {{ Request::is('aset*') ? 'active' : null }}">
                     <a class="sidebar-link {{ Request::is('aset*') ? 'fw-bold' : null }}" href="{{ route('aset.index') }}">
@@ -51,6 +60,15 @@
                     </ul>
                 </li>
             @endcanany
+            @can('peramalan index')
+                <li class="sidebar-item {{ Request::is('peramalan*') ? 'active' : null }}">
+                    <a class="sidebar-link {{ Request::is('peramalan*') ? 'fw-bold' : null }}"
+                        href="{{ route('peramalan.index') }}">
+                        <i class="bi bi-graph-down align-middle"></i>
+                        <span class="align-middle">Peramalan</span>
+                    </a>
+                </li>
+            @endcan
             <li class="sidebar-item {{ Request::is('report*') ? 'active' : null }}">
                 <a class="sidebar-link {{ Request::is('report*') ? 'fw-bold' : null }}"
                     href="{{ route('report.index') }}">
