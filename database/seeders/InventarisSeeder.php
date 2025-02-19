@@ -37,7 +37,7 @@ class InventarisSeeder extends Seeder {
                 'verified_at'           => $i == 2 ? null : date('Y-m-d H:i:s'),
             ]);
             if ($inventarisMasuk) {
-                for ($j = 0; $j < rand(5, 8); $j++) {
+                for ($j = 0; $j < rand(10, 30); $j++) {
                     $rand = rand(0, 3);
                     Item::create([
                         'name'          => $item[$rand]['name'],
@@ -49,7 +49,6 @@ class InventarisSeeder extends Seeder {
             }
         }
 
-        $jmlItem = Item::count();
         $inventarisKeluar = Inventaris::create([
             'kode_inventarisasi' => $this->randomString(12),
             'tahun_pengadaan' => 2024,

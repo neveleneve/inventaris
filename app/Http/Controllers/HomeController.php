@@ -15,7 +15,7 @@ class HomeController extends Controller {
     public function index() {
         $kategori = JenisAset::get();
         $tahun = date('Y');
-        $years = range($tahun, $tahun - 4);
+        $years = range($tahun - 4, $tahun);
 
         $asetMasukPerJenis = [];
         $masuk = Item::with(['inventaris', 'jenis'])
@@ -53,9 +53,43 @@ class HomeController extends Controller {
             }
         }
 
+        $asetMasukPerJenisTable = [];
+        $iampjt = 0;
+        foreach ($years as $year) {
+            $asetMasukPerJenisTable[$iampjt]['tahun'] = $year;
+            foreach ($kategori as $jenis) {
+                $asetMasukPerJenisTable[$iampjt]['data'][$jenis->id] = $masuk
+                    ->where('jenis_aset_id', $jenis->id)
+                    ->where('inventaris.tahun_pengadaan', $year)
+                    ->count();
+            }
+            $iampjt++;
+        }
+
+        $asetKeluarPerJenisTable = [];
+        $iakpjt = 0;
+        foreach ($years as $year) {
+            $asetKeluarPerJenisTable[$iakpjt]['tahun'] = $year;
+            foreach ($kategori as $jenis) {
+                $asetKeluarPerJenisTable[$iakpjt]['data'][$jenis->id] = InventarisKeluar::with(['aset', 'aset.jenis', 'inventaris'])
+                    ->whereHas('inventaris', function ($q) use ($years, $year) {
+                        $q->whereIn('tahun_pengadaan', $years)
+                            ->where('tahun_pengadaan', $year)
+                            ->where('verified_at', '!=', null)
+                            ->where('jenis_inventarisasi', 'keluar');
+                    })
+                    ->whereHas('aset.jenis', function ($q) use ($jenis) {
+                        $q->where('jenis_aset_id', $jenis->id);
+                    })
+                    ->count();
+            }
+            $iakpjt++;
+        }
+
         $asetTersedia = Item::with('inventaris', 'jenis')
             ->whereHas('inventaris', function ($q) {
-                $q->where('verified_at', '!=', null)
+                $q
+                    ->where('verified_at', '!=', null)
                     ->where('jenis_inventarisasi', 'masuk');
             })
             ->whereDoesntHave('inventaris_keluar', function ($q) {
@@ -67,7 +101,8 @@ class HomeController extends Controller {
             ->count();
         $asetTidakTersedia = InventarisKeluar::with('inventaris')
             ->whereHas('inventaris', function ($q) {
-                $q->where('verified_at', '!=', null)
+                $q
+                    ->where('verified_at', '!=', null)
                     ->where('jenis_inventarisasi', 'keluar');
             })
             ->count();
@@ -76,7 +111,9 @@ class HomeController extends Controller {
             'asetnok' => $asetTidakTersedia,
             'kategori' => $kategori,
             'asetMasukPerJenis' => $asetMasukPerJenis,
+            'asetMasukPerJenisTable' => $asetMasukPerJenisTable,
             'asetKeluarPerJenis' => $asetKeluarPerJenis,
+            'asetKeluarPerJenisTable' => $asetKeluarPerJenisTable,
         ]);
     }
 }

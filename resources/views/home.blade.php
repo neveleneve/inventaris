@@ -52,24 +52,11 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Grafik Status Aset Masuk</h5>
-                        <canvas id="chartAsetMasuk"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Grafik Status Aset Keluar</h5>
-                        <canvas id="chartAsetKeluar"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @livewire('dashboard-graphic', [
+            'kategori' => $kategori,
+            'asetMasukPerJenisTable' => $asetMasukPerJenisTable,
+            'asetKeluarPerJenisTable' => $asetKeluarPerJenisTable,
+        ])
     </div>
 @endsection
 
@@ -131,15 +118,15 @@
                         '{{ now()->year }}'
                     ],
                     datasets: [
-                        @foreach ($kategori as $jenis)
+                        @foreach ($kategori as $jenisx)
                             {
                                 label: '{{ $jenis->name }}',
                                 data: [
-                                    {{ isset($asetKeluarPerJenis[$jenis->id][now()->subYears(4)->year]) ? $asetKeluarPerJenis[$jenis->id][now()->subYears(4)->year] : 0 }},
-                                    {{ isset($asetKeluarPerJenis[$jenis->id][now()->subYears(3)->year]) ? $asetKeluarPerJenis[$jenis->id][now()->subYears(3)->year] : 0 }},
-                                    {{ isset($asetKeluarPerJenis[$jenis->id][now()->subYears(2)->year]) ? $asetKeluarPerJenis[$jenis->id][now()->subYears(2)->year] : 0 }},
-                                    {{ isset($asetKeluarPerJenis[$jenis->id][now()->subYear()->year]) ? $asetKeluarPerJenis[$jenis->id][now()->subYear()->year] : 0 }},
-                                    {{ isset($asetKeluarPerJenis[$jenis->id][now()->year]) ? $asetKeluarPerJenis[$jenis->id][now()->year] : 0 }}
+                                    {{ isset($asetKeluarPerJenis[$jenisx->id][now()->subYears(4)->year]) ? $asetKeluarPerJenis[$jenisx->id][now()->subYears(4)->year] : 0 }},
+                                    {{ isset($asetKeluarPerJenis[$jenisx->id][now()->subYears(3)->year]) ? $asetKeluarPerJenis[$jenisx->id][now()->subYears(3)->year] : 0 }},
+                                    {{ isset($asetKeluarPerJenis[$jenisx->id][now()->subYears(2)->year]) ? $asetKeluarPerJenis[$jenisx->id][now()->subYears(2)->year] : 0 }},
+                                    {{ isset($asetKeluarPerJenis[$jenisx->id][now()->subYear()->year]) ? $asetKeluarPerJenis[$jenisx->id][now()->subYear()->year] : 0 }},
+                                    {{ isset($asetKeluarPerJenis[$jenisx->id][now()->year]) ? $asetKeluarPerJenis[$jenisx->id][now()->year] : 0 }}
                                 ],
                                 @php
                                     $color = 'rgb(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ')';

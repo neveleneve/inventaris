@@ -80,7 +80,8 @@
                             @canany(['aset show', 'aset edit'])
                                 <div class="col-12 mt-2">
                                     @can('aset show')
-                                        <button class="btn btn-primary btn-sm fw-bold w-100" wire:click='getDataAset({{ $item->id }})'>
+                                        <button class="btn btn-primary btn-sm fw-bold w-100"
+                                            wire:click='getDataAset({{ $item->id }})'>
                                             Lihat
                                         </button>
                                     @endcan
@@ -99,7 +100,7 @@
     <div class="col-lg-12">
         {{ $items->links('layouts.pagination') }}
     </div>
-    <div class="modal modal-lg fade" id="modalLihat" tabindex="-1" wire:ignore.self>
+    <div class="modal modal-lg fade" data-bs-backdrop="static" id="modalLihat" tabindex="-1" wire:ignore.self>
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">

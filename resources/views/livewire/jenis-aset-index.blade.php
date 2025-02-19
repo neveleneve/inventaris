@@ -82,7 +82,7 @@
     <div class="col-lg-12">
         {{ $jenisAset->links('layouts.pagination') }}
     </div>
-    <div class="modal modal-lg fade" id="modalLihat" tabindex="-1" wire:ignore.self>
+    <div class="modal modal-lg fade" data-bs-backdrop="static"z id="modalLihat" tabindex="-1" wire:ignore.self>
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">

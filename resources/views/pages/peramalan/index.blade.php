@@ -12,9 +12,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="row justify-content-center">
-                            {{-- @livewire('aset-index') --}}
-                        </div>
+                        @livewire('forecast-index')
                     </div>
                 </div>
             </div>
